@@ -43,7 +43,7 @@ module Ratyrate
       a.save!(validate: false)
     end
   end
-  
+
   def update_rate_average(stars, dimension=nil)
     if average(dimension).nil?
       RatingCache.create! do |avg|
@@ -78,14 +78,14 @@ module Ratyrate
   def overall_avg(user)
     # avg = OverallAverage.where(rateable_id: self.id)
     # #FIXME: Fix the bug when the movie has no ratings
-    # unless avg.empty? 
+    # unless avg.empty?
     #   return avg.take.avg unless avg.take.avg == 0
     # else # calculate average, and save it
     #   dimensions_count = overall_score = 0
     #   user.ratings_given.select('DISTINCT dimension').each do |d|
     #     dimensions_count = dimensions_count + 1
     #     unless average(d.dimension).nil?
-    #       overall_score = overall_score + average(d.dimension).avg 
+    #       overall_score = overall_score + average(d.dimension).avg
     #     end
     #   end
     #   overall_avg = (overall_score / dimensions_count).to_f.round(1)
@@ -97,7 +97,7 @@ module Ratyrate
     #   overall_avg
     # end
   end
-  
+
   # calculate the movie overall average rating for all users
   def calculate_overall_average
   end
@@ -137,7 +137,7 @@ module Ratyrate
                                               :class_name => "Rate",
                                               :as => :rateable
 
-        has_many "#{dimension}_raters".to_sym, :through => "#{dimension}_rates", :source => :rater
+        has_many "#{dimension}_raters".to_sym, :through => "#{dimension}_rates".to_sym, :source => :rater
 
         has_one "#{dimension}_average".to_sym, -> { where dimension: dimension.to_s },
                                               :as => :cacheable, :class_name => "RatingCache",
